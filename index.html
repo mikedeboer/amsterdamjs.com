@@ -52,6 +52,9 @@
 				left: 0;
 				margin: 0;
 				overflow: hidden;
+				font-family: 'PT Sans Narrow', sans-serif;
+				font-size: 100%;
+				line-height: 1.5;
 				color: #333;
 				-webkit-font-smoothing: antialiased;
 			}
@@ -61,7 +64,6 @@
 				right: 0;
 				bottom: 0;
 				left: 0;
-				font-family: 'PT Sans Narrow', sans-serif;
 				overflow-y: scroll;
 			}
 			#content {
@@ -70,15 +72,14 @@
 				max-width: 60em;
 			}
 			#content > h1 {
-				margin: 1em 0 2em 0;
+				margin: .8em 0 1.6em 0;
 				color: rgba(255, 255, 255, .9);
 				text-align: center;
-				font-size: 3em;
-				font-weight: 700;
-				text-shadow: rgba(255, 255, 255, .5) 0 0 .5em;
+				font-size: 4em;
+				text-shadow: rgba(255, 255, 255, .5) 0 1px .1em;
 			}
 			#content > h1 > img {
-				width: 50px;
+				width: 60px;
 				vertical-align: text-bottom;
 				-webkit-transform: rotate(15deg);
 				-moz-transform: rotate(15deg);
@@ -87,13 +88,16 @@
 			#content > aside, #content > article {
 				padding: 0 1em;
 				margin-bottom: 1em;
-				background-color: rgba(255, 255, 255, .5);
+				background-color: rgba(255, 255, 255, .6);
 				border-radius: .5em;
-				-webkit-transition: background-color .5s;
-				-moz-transition: background-color .5s;
+				-webkit-transition-property: background-color, box-shadow;
+				-webkit-transition-duration: .5s;
+				-moz-transition-property: background-color, box-shadow;
+				-moz-transition-duration: .5s;
 			}
 			#content > aside:hover, #content > article:hover {
 				background-color: rgba(255, 255, 255, .9);
+				box-shadow: 0 2px .2em rgba(255, 255, 255, .5);
 			}
 			#content > aside {
 				float: right;
@@ -101,6 +105,7 @@
 				width: 25%;
 			}
 			#content > article {
+				font-size: 1.2em;
 				margin-right: 28%;
 				/* Hack to prevent childrens vertical margins from collapsing
 				   into the articles vertical margins. We cannot use
@@ -112,8 +117,8 @@
 			#content > footer {
 				margin: 6em 0 3em 0;
 				text-align: center;
-				color: rgba(255, 255, 255, .3);
-				text-shadow: rgba(255, 255, 255, .3) 0 0 .5em;
+				color: rgba(255, 255, 255, .5);
+				text-shadow: rgba(255, 255, 255, .1) 0 1px .1em;
 			}
   		</style>
 	</head>
@@ -122,7 +127,7 @@
 			<div id="content">
 				<h1>Amsterdam<img src="./js.png"></h1>
 				<aside>
-					<h3>Index</h3>
+					<h3>Sections</h3>
 					<ul>
 						<li><a href="">News</a></li>
 						<li><a href="">Schedule</a></li>
@@ -173,6 +178,7 @@
 					segments = 60,
 					rings = 40;
 				var geometry = new THREE.SphereGeometry(radius, segments, rings),
+					// TODO: Ask permission to use this photo.
 					material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('./amsterdam.jpg') });
 				var mesh = new THREE.Mesh(geometry, material);
 				mesh.scale.x = -1;
@@ -207,6 +213,10 @@
 				document.addEventListener('keydown', function(e) {
 					var cmd = cmds[e.keyCode];
 					if (cmd) {
+						// TODO: It would work more intuitive if the camera
+						// target (`lookAt()`) was the thing that is
+						// manipulated. But that would require some geometry
+						// so that needs a bit of investigation.
 						mesh.rotation[cmd[0]] += cmd[1] * delta;
 						render();
 					}
