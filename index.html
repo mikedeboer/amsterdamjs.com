@@ -2,12 +2,48 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="author" content="Tim Molendijk <tim at smart dot pr>">
 
 		<title>AmsterdamJS</title>
 
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700">
 		<style>
+  			* {
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+			}
+			a {
+				color: #b73631;
+				font-weight: 700;
+			}
+			a:hover {
+				color: #d83f3a;
+			}
+			@-webkit-keyframes pirouette {
+				from {
+					-webkit-transform: perspective(400px) rotateY(0deg);
+				}
+				to {
+					-webkit-transform: perspective(400px) rotateY(360deg);
+				}
+			}
+			@-moz-keyframes pirouette {
+				from {
+					-moz-transform: perspective(400px) rotateY(0deg);
+				}
+				to {
+					-moz-transform: perspective(400px) rotateY(360deg);
+				}
+			}
+			.love {
+				display: inline-block;
+				color: #b73631;
+				-webkit-animation: pirouette 1s infinite alternate;
+				-webkit-transform: perspective(400px) rotateY(0deg);
+				/* TODO: get rid of flicker in Mozilla */
+				-moz-animation: pirouette 1s infinite alternate;
+				-moz-transform: perspective(400px) rotateY(0deg);
+			}
 			body {
 				position: absolute;
 				top: 0;
@@ -16,51 +52,119 @@
 				left: 0;
 				margin: 0;
 				overflow: hidden;
+				color: #333;
+				-webkit-font-smoothing: antialiased;
+			}
+			#scroll {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				font-family: 'PT Sans Narrow', sans-serif;
+				overflow-y: scroll;
 			}
 			#content {
-				position: absolute;
-				top: 2em;
-				right: 2em;
-				bottom: 2em;
-				left: 2em;
-				font-family: 'PT Sans Narrow', sans-serif;
+				margin: 0 auto;
+				padding: 0 1em;
+				max-width: 60em;
 			}
 			#content > h1 {
-				color: White;
+				margin: 1em 0 2em 0;
+				color: rgba(255, 255, 255, .9);
 				text-align: center;
 				font-size: 3em;
 				font-weight: 700;
 				text-shadow: rgba(255, 255, 255, .5) 0 0 .5em;
 			}
 			#content > h1 > img {
+				width: 50px;
 				vertical-align: text-bottom;
 				-webkit-transform: rotate(15deg);
 				-moz-transform: rotate(15deg);
 				box-shadow: 0 2px 2px rgba(0, 0, 0, .5);
 			}
-			#content > article {
-				width: 40em;
-				margin: 0 auto;
-				padding: .3em 1em;
+			#content > aside, #content > article {
+				padding: 0 1em;
+				margin-bottom: 1em;
 				background-color: rgba(255, 255, 255, .5);
 				border-radius: .5em;
+				-webkit-transition: background-color .5s;
+				-moz-transition: background-color .5s;
+			}
+			#content > aside:hover, #content > article:hover {
+				background-color: rgba(255, 255, 255, .9);
+			}
+			#content > aside {
+				float: right;
+				clear: right;
+				width: 25%;
+			}
+			#content > article {
+				margin-right: 28%;
+				/* Hack to prevent childrens vertical margins from collapsing
+				   into the articles vertical margins. We cannot use
+				   overflow-y: hidden because it messes up the float-based
+				   lay-out. */
+				padding-top: 1px;
+				padding-bottom: 1px;
+			}
+			#content > footer {
+				margin: 6em 0 3em 0;
+				text-align: center;
+				color: rgba(255, 255, 255, .3);
+				text-shadow: rgba(255, 255, 255, .3) 0 0 .5em;
 			}
   		</style>
 	</head>
 	<body>
-		<div id="content">
-			<h1>Amsterdam<img src="./js.png"></h1>
-			<article>
-				<h2>AmsterdamJS is getting a boob job!</h2>
-				<p>Mike, Nikolai &amp; Tim think it's sexy&hellip;</p>
-			</article>
+		<div id="scroll">
+			<div id="content">
+				<h1>Amsterdam<img src="./js.png"></h1>
+				<aside>
+					<h3>Index</h3>
+					<ul>
+						<li><a href="">News</a></li>
+						<li><a href="">Schedule</a></li>
+						<li><a href="">About</a></li>
+					</ul>
+					<h3>Follow us</h3>
+					<ul>
+						<li><a href="http://twitter.com/AmsterdamJS">Twitter</a></li>
+						<li><a href="http://groups.google.com/group/amsterdam-js">Google Groups</a></li>
+					</ul>
+					<h3>We say thank you to</h3>
+					<ul>
+						<li><a href="http://c9.io/">Cloud9</a></li>
+						<li><a href="http://smart.pr/">Smart.pr</a></li>
+						<li><a href="http://uxebu.com/">uxebu</a></li>
+					</ul>
+				</aside>
+				<article>
+					<h2>AmsterdamJS is getting a boob job!</h2>
+					<p>Mike, Nikolai &amp; Tim think it's sexy&hellip;</p>
+				</article>
+				<article>
+					<h2>De standaard Lorem Ipsum passage, in gebruik sinds de 16e eeuw</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</article>
+				<article>
+					<h2>De standaard Lorem Ipsum passage, in gebruik sinds de 16e eeuw</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</article>
+				<footer>
+					Made with <span class="love">♥</span> by Tim Molendijk
+				</footer>
+			</div>
 		</div>
 		
 		<script src="./Three.js"></script>
 		<script>
 			(function() {
 				
-				var radius = 500,
+				var radius = 10,
 					segments = 60,
 					rings = 40;
 				var geometry = new THREE.SphereGeometry(radius, segments, rings),
@@ -73,7 +177,7 @@
 					near = 1,
 					far = radius * 2;
 				var camera = new THREE.PerspectiveCamera(angle, aspect, near, far);
-				camera.lookAt(new THREE.Vector3(-500, 0, 0));
+				camera.lookAt(new THREE.Vector3(-radius, 0, 0));
 
 				var scene = new THREE.Scene();
 				scene.add(mesh);
@@ -84,18 +188,21 @@
 
 				document.body.appendChild(renderer.domElement);
 
-				var alive = false;
 				var render = function() {
-					if (alive) {
-						requestAnimationFrame(arguments.callee);
-						mesh.rotation.y += .003;
-					}
 					renderer.render(scene, camera);
 				};
 				
+				var delta = .025;
+				var cmds = [];
+				cmds[72] = ['y', -1];
+				cmds[74] = ['z', -1];
+				cmds[75] = ['z', 1];
+				cmds[76] = ['y', 1];
+
 				document.addEventListener('keydown', function(e) {
-					if (e.keyCode === 32) {
-						alive = !alive;
+					var cmd = cmds[e.keyCode];
+					if (cmd) {
+						mesh.rotation[cmd[0]] += cmd[1] * delta;
 						render();
 					}
 				});
