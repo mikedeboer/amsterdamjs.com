@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<title>AmsterdamJS</title>
+
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700">
+		<style>
+			body {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				margin: 0;
+				overflow: hidden;
+			}
+			#content {
+				position: absolute;
+				top: 2em;
+				right: 2em;
+				bottom: 2em;
+				left: 2em;
+				font-family: 'PT Sans Narrow', sans-serif;
+			}
+			#content > h1 {
+				color: White;
+				text-align: center;
+				font-size: 3em;
+				font-weight: 700;
+				text-shadow: rgba(255, 255, 255, .5) 0 0 .5em;
+			}
+			#content > h1 > img {
+				vertical-align: text-bottom;
+				-webkit-transform: rotate(15deg);
+				-moz-transform: rotate(15deg);
+				box-shadow: 0 2px 2px rgba(0, 0, 0, .5);
+			}
+			#content > article {
+				width: 40em;
+				margin: 0 auto;
+				padding: .3em 1em;
+				background-color: rgba(255, 255, 255, .5);
+				border-radius: .5em;
+			}
+  		</style>
+	</head>
+	<body>
+		<div id="content">
+			<h1>Amsterdam<img src="./js.png"></h1>
+			<article>
+				<h2>AmsterdamJS is getting a boob job!</h2>
+				<p>Mike, Nikolai &amp; Tim think it's sexy&hellip;</p>
+			</article>
+		</div>
+		
+		<script src="./Three.js"></script>
+		<script>
+			(function() {
+				
+				var radius = 500,
+					segments = 60,
+					rings = 40;
+				var geometry = new THREE.SphereGeometry(radius, segments, rings),
+					material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('./amsterdam.jpg') });
+				var mesh = new THREE.Mesh(geometry, material);
+				mesh.scale.x = -1;
+
+				var angle = 70,
+					aspect = window.innerWidth / window.innerHeight,
+					near = 1,
+					far = radius * 2;
+				var camera = new THREE.PerspectiveCamera(angle, aspect, near, far);
+				camera.lookAt(new THREE.Vector3(-500, 0, 0));
+
+				var scene = new THREE.Scene();
+				scene.add(mesh);
+				scene.add(camera);
+
+				var renderer = new THREE.WebGLRenderer();
+				renderer.setSize(window.innerWidth, window.innerHeight);
+
+				document.body.appendChild(renderer.domElement);
+
+				var alive = false;
+				var render = function() {
+					if (alive) {
+						requestAnimationFrame(arguments.callee);
+						mesh.rotation.y += .003;
+					}
+					renderer.render(scene, camera);
+				};
+				
+				document.addEventListener('keydown', function(e) {
+					if (e.keyCode === 32) {
+						alive = !alive;
+						render();
+					}
+				});
+
+				window.addEventListener('load', render);
+
+			}());
+		</script>
+	</body>
+</html>
